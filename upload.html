@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Upload Student Data</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('predict') }}">Predict</a>
+
+        <a href="{{ url_for('upload') }}">Upload CSV</a>
+
+        <a href="{{ url_for('history') }}">History</a>
+
+        <a href="{{ url_for('model_performance') }}">
+            Model Performance
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Upload Student Dataset
+    </h1>
+
+    <p>
+        Upload a CSV file containing multiple student
+        records for batch prediction.
+    </p>
+
+
+    <div class="card-wide">
+
+        <h2>
+            Required CSV Columns
+        </h2>
+
+        <div class="column-list">
+
+            <span>branch</span>
+
+            <span>college_tier</span>
+
+            <span>cgpa</span>
+
+            <span>backlogs</span>
+
+            <span>coding_skills</span>
+
+            <span>dsa_score</span>
+
+            <span>aptitude_score</span>
+
+            <span>communication_skills</span>
+
+            <span>internships</span>
+
+            <span>certifications</span>
+
+        </div>
+
+    </div>
+
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <label>
+            Select CSV File
+        </label>
+
+        <input
+            type="file"
+            name="file"
+            accept=".csv"
+            required
+        >
+
+
+        <button type="submit">
+
+            Analyze CSV
+
+        </button>
+
+    </form>
+
+
+    <div class="info-note">
+
+        <strong>Tip:</strong>
+
+        Make sure your column names exactly match
+        the required columns above.
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

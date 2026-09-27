@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Data Visualization</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('predict') }}">Predict</a>
+
+        <a href="{{ url_for('upload') }}">Upload CSV</a>
+
+        <a href="{{ url_for('history') }}">History</a>
+
+        <a href="{{ url_for('model_performance') }}">
+            Model Performance
+        </a>
+
+        <a href="{{ url_for('feature_importance') }}">
+            AI Analysis
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Data Analysis & Visualizations
+    </h1>
+
+    <p>
+        Visual analysis of the dataset and machine learning
+        model performance.
+    </p>
+
+
+    <!-- TARGET DISTRIBUTION -->
+
+    <div class="graph-card">
+
+        <h2>
+            Student Placement Distribution
+        </h2>
+
+        <p>
+            Distribution of students according to
+            their placement status.
+        </p>
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='graphs/target_distribution.png'
+            ) }}"
+            alt="Student Placement Distribution"
+        >
+
+    </div>
+
+
+    <!-- MODEL COMPARISON -->
+
+    <div class="graph-card">
+
+        <h2>
+            Machine Learning Model Comparison
+        </h2>
+
+        <p>
+            Comparison of Accuracy, F1 Score and ROC-AUC
+            across the trained models.
+        </p>
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='graphs/model_comparison.png'
+            ) }}"
+            alt="Model Comparison"
+        >
+
+    </div>
+
+
+    <!-- FEATURE IMPORTANCE -->
+
+    <div class="graph-card">
+
+        <h2>
+            Top Feature Importance
+        </h2>
+
+        <p>
+            Top features influencing the selected
+            machine learning model.
+        </p>
+
+        <img
+            src="{{ url_for(
+                'static',
+                filename='graphs/feature_importance.png'
+            ) }}"
+            alt="Feature Importance"
+        >
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

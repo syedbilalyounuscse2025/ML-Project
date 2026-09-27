@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Batch Prediction Results</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('predict') }}">Predict</a>
+
+        <a href="{{ url_for('upload') }}">Upload CSV</a>
+
+        <a href="{{ url_for('history') }}">History</a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Batch Prediction Results
+    </h1>
+
+
+    <div class="result-card">
+
+        <h2>
+            Analysis Completed
+        </h2>
+
+        <p>
+
+            Total students analyzed:
+
+            <strong>
+                {{ records|length }}
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <tr>
+
+                <th>Student</th>
+
+                <th>Branch</th>
+
+                <th>CGPA</th>
+
+                <th>Coding</th>
+
+                <th>DSA</th>
+
+                <th>Probability</th>
+
+                <th>Status</th>
+
+            </tr>
+
+
+            {% for student in records %}
+
+            <tr>
+
+                <td>
+                    {{ loop.index }}
+                </td>
+
+                <td>
+                    {{ student.branch }}
+                </td>
+
+                <td>
+                    {{ student.cgpa }}
+                </td>
+
+                <td>
+                    {{ student.coding_skills }}
+                </td>
+
+                <td>
+                    {{ student.dsa_score }}
+                </td>
+
+                <td>
+                    {{ student.placement_probability }}%
+                </td>
+
+                <td>
+
+                    {% if student.prediction == 1 %}
+
+                        <span class="likely">
+                            LIKELY TO BE PLACED
+                        </span>
+
+                    {% else %}
+
+                        <span class="unlikely">
+                            LESS LIKELY
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+
+    <div class="action-buttons">
+
+        <a
+            href="{{ url_for('upload') }}"
+            class="button"
+        >
+            Analyze Another File
+        </a>
+
+        <a
+            href="{{ url_for('history') }}"
+            class="button secondary-button"
+        >
+            View History
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

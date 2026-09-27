@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PlacementAI - Student Placement Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('predict') }}">
+            Predict
+        </a>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('model_performance') }}">
+            Model Performance
+        </a>
+
+        <a href="{{ url_for('feature_importance') }}">
+            AI Analysis
+        </a>
+
+        <a href="{{ url_for('history') }}">
+            History
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="hero">
+
+        <h1>
+            Student Placement Prediction
+        </h1>
+
+        <p>
+
+            Predict a student's placement probability
+            using Machine Learning.
+
+        </p>
+
+        <p class="hero-small">
+
+            Analyze academic performance, technical
+            skills, aptitude, communication,
+            internships and certifications.
+
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+    <div class="error-box">
+
+        {{ error }}
+
+    </div>
+
+    {% endif %}
+
+
+    <div class="section-title">
+
+        <h2>
+            Enter Student Details
+        </h2>
+
+        <p>
+            Provide the student's information below.
+        </p>
+
+    </div>
+
+
+    <form method="POST"
+          action="{{ url_for('predict') }}">
+
+
+        <label>
+            Branch
+        </label>
+
+        <select
+            name="branch"
+            required>
+
+            <option value="">
+                Select Branch
+            </option>
+
+            <option value="CSE">
+                CSE
+            </option>
+
+            <option value="ECE">
+                ECE
+            </option>
+
+            <option value="IT">
+                IT
+            </option>
+
+            <option value="MECH">
+                MECH
+            </option>
+
+            <option value="CIVIL">
+                CIVIL
+            </option>
+
+        </select>
+
+
+        <label>
+            College Tier
+        </label>
+
+        <select
+            name="college_tier"
+            required>
+
+            <option value="">
+                Select College Tier
+            </option>
+
+            <option value="Tier1">
+                Tier 1
+            </option>
+
+            <option value="Tier2">
+                Tier 2
+            </option>
+
+            <option value="Tier3">
+                Tier 3
+            </option>
+
+        </select>
+
+
+        <label>
+            CGPA
+        </label>
+
+        <input
+            type="number"
+            name="cgpa"
+            min="4"
+            max="10"
+            step="0.01"
+            placeholder="Example: 8.2"
+            required
+        >
+
+
+        <label>
+            Backlogs
+        </label>
+
+        <input
+            type="number"
+            name="backlogs"
+            min="0"
+            max="3"
+            placeholder="Example: 0"
+            required
+        >
+
+
+        <label>
+            Coding Skills (1-10)
+        </label>
+
+        <input
+            type="number"
+            name="coding_skills"
+            min="1"
+            max="10"
+            step="0.1"
+            placeholder="Example: 8"
+            required
+        >
+
+
+        <label>
+            DSA Score (1-10)
+        </label>
+
+        <input
+            type="number"
+            name="dsa_score"
+            min="1"
+            max="10"
+            step="0.1"
+            placeholder="Example: 8"
+            required
+        >
+
+
+        <label>
+            Aptitude Score (20-100)
+        </label>
+
+        <input
+            type="number"
+            name="aptitude_score"
+            min="20"
+            max="100"
+            placeholder="Example: 75"
+            required
+        >
+
+
+        <label>
+            Communication Skills (1-10)
+        </label>
+
+        <input
+            type="number"
+            name="communication_skills"
+            min="1"
+            max="10"
+            step="0.1"
+            placeholder="Example: 8"
+            required
+        >
+
+
+        <label>
+            Internships
+        </label>
+
+        <input
+            type="number"
+            name="internships"
+            min="0"
+            max="3"
+            placeholder="Example: 1"
+            required
+        >
+
+
+        <label>
+            Certifications
+        </label>
+
+        <input
+            type="number"
+            name="certifications"
+            min="0"
+            max="4"
+            placeholder="Example: 2"
+            required
+        >
+
+
+        <button type="submit">
+
+            Predict Placement
+
+        </button>
+
+
+    </form>
+
+
+</div>
+
+
+</body>
+
+</html>

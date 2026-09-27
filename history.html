@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Prediction History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/predict">
+            Predict
+        </a>
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/model-performance">
+            Model Performance
+        </a>
+
+        <a href="/feature-importance">
+            AI Analysis
+        </a>
+
+        <a href="/history">
+            History
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    <div class="result-header">
+
+        <h1>
+            Prediction History
+        </h1>
+
+        <p>
+            Previous student placement predictions.
+        </p>
+
+    </div>
+
+
+    {% if records %}
+
+
+    <div class="table-container">
+
+
+        <table>
+
+            <tr>
+
+                <th>
+                    Date
+                </th>
+
+                <th>
+                    Branch
+                </th>
+
+                <th>
+                    College
+                </th>
+
+                <th>
+                    CGPA
+                </th>
+
+                <th>
+                    Probability
+                </th>
+
+                <th>
+                    Result
+                </th>
+
+            </tr>
+
+
+            {% for record in records %}
+
+
+            <tr>
+
+                <td>
+                    {{ record["date"] }}
+                </td>
+
+
+                <td>
+                    {{ record["branch"] }}
+                </td>
+
+
+                <td>
+                    {{ record["college_tier"] }}
+                </td>
+
+
+                <td>
+                    {{ record["cgpa"] }}
+                </td>
+
+
+                <td>
+
+                    {{ "%.2f"|format(
+                        record["probability"]
+                    ) }}%
+
+                </td>
+
+
+                <td>
+
+                    {% if record["prediction"] == 1 %}
+
+                    <span class="history-success">
+
+                        Likely Placed
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="history-danger">
+
+                        Less Likely
+
+                    </span>
+
+                    {% endif %}
+
+                </td>
+
+
+            </tr>
+
+
+            {% endfor %}
+
+
+        </table>
+
+
+    </div>
+
+
+    {% else %}
+
+
+    <div class="card">
+
+        <h2>
+            No Predictions Yet
+        </h2>
+
+        <p>
+            Make your first student prediction.
+        </p>
+
+        <a
+            href="/predict"
+            class="button">
+
+            Make Prediction
+
+        </a>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Placement Predictor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Student Placement Predictor</h1>
+
+    <p class="subtitle">
+        Enter student details to predict placement chances
+    </p>
+
+    <form method="POST" action="{{ url_for('predict') }}">
+
+        <label>Branch</label>
+        <select name="branch" required>
+            <option value="">Select Branch</option>
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="IT">IT</option>
+            <option value="MECH">MECH</option>
+            <option value="CIVIL">CIVIL</option>
+        </select>
+
+        <label>College Tier</label>
+        <select name="college_tier" required>
+            <option value="">Select College Tier</option>
+            <option value="Tier1">Tier1</option>
+            <option value="Tier2">Tier2</option>
+            <option value="Tier3">Tier3</option>
+        </select>
+
+        <label>CGPA</label>
+        <input type="number" name="cgpa" min="0" max="10" step="0.01" required>
+
+        <label>Backlogs</label>
+        <input type="number" name="backlogs" min="0" required>
+        <label>Coding Skills (1-10)</label>
+        <input type="number" name="coding_skills" min="1" max="10" step="0.1" required>
+
+        <label>DSA Score (1-10)</label>
+        <input type="number" name="dsa_score" min="1" max="10" step="0.1" required>
+
+        <label>Aptitude Score (0-100)</label>
+        <input type="number" name="aptitude_score" min="0" max="100" required>
+
+        <label>Communication Skills (1-10)</label>
+        <input type="number" name="communication_skills" min="1" max="10" step="0.1" required>
+
+        <label>Internships</label>
+        <input type="number" name="internships" min="0" required>
+
+        <label>Certifications</label>
+        <input type="number" name="certifications" min="0" required>
+
+        <button type="submit">
+            Predict Placement
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Analysis</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('predict') }}">Predict</a>
+
+        <a href="{{ url_for('upload') }}">Upload CSV</a>
+
+        <a href="{{ url_for('history') }}">History</a>
+
+        <a href="{{ url_for('model_performance') }}">
+            Model Performance
+        </a>
+
+        <a href="{{ url_for('feature_importance') }}">
+            AI Analysis
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>AI Placement Analysis</h1>
+
+
+    <!-- ================================================= -->
+    <!-- PREDICTION -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Prediction</h2>
+
+        {% if prediction == 1 %}
+
+            <div class="success">
+                LIKELY TO BE PLACED
+            </div>
+
+        {% else %}
+
+            <div class="danger">
+                LESS LIKELY TO BE PLACED
+            </div>
+
+        {% endif %}
+
+
+        <h3>
+            Placement Probability
+        </h3>
+
+
+        <div class="percentage">
+
+            {{ placement_probability }}%
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                class="progress-bar"
+                style="width: {{ placement_probability }}%;">
+            </div>
+
+        </div>
+
+
+        <p>
+
+            Probability of not being placed:
+            <strong>
+                {{ not_placement_probability }}%
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- PROFILE LEVEL -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Overall Profile</h2>
+
+        <div class="profile-badge">
+
+            {{ profile_level }}
+
+        </div>
+
+        <p>
+            The profile level is based on the model's
+            predicted placement probability.
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- AI EXPLANATION -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>
+            AI Prediction Analysis
+        </h2>
+
+        <p>
+            The following features had the strongest
+            influence on the model's prediction for
+            this student.
+        </p>
+
+
+        {% for factor in top_factors %}
+
+        <div class="factor">
+
+            <div class="factor-header">
+
+                <strong>
+
+                    {{ factor.feature
+                        .replace("num__", "")
+                        .replace("cat__", "")
+                        .replace("_", " ")
+                        .title()
+                    }}
+
+                </strong>
+
+                <span>
+
+                    {{ (factor.importance * 100)|round(2) }}%
+
+                </span>
+
+            </div>
+
+
+            <div class="bar">
+
+                <div
+                    class="bar-fill"
+                    style="width:
+                    {{ (factor.importance * 100)|round(1) }}%;">
+                </div>
+
+            </div>
+
+
+            <small>
+
+                Model importance:
+                {{ (factor.importance * 100)|round(2) }}%
+
+            </small>
+
+        </div>
+
+        {% endfor %}
+
+        <p class="info-note">
+
+            Note: Feature importance shows how strongly
+            a feature contributes to the model's decision.
+            It does not mean that the feature alone causes
+            placement.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- STUDENT PROFILE -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Student Profile</h2>
+
+        <div class="profile-grid">
+
+            <p>
+                <strong>Branch</strong>
+                {{ branch }}
+            </p>
+
+            <p>
+                <strong>College Tier</strong>
+                {{ college_tier }}
+            </p>
+
+            <p>
+                <strong>CGPA</strong>
+                {{ cgpa }}
+            </p>
+
+            <p>
+                <strong>Backlogs</strong>
+                {{ backlogs }}
+            </p>
+
+            <p>
+                <strong>Coding Skills</strong>
+                {{ coding_skills }}/10
+            </p>
+
+            <p>
+                <strong>DSA Score</strong>
+                {{ dsa_score }}/10
+            </p>
+
+            <p>
+                <strong>Aptitude</strong>
+                {{ aptitude_score }}/100
+            </p>
+
+            <p>
+                <strong>Communication</strong>
+                {{ communication_skills }}/10
+            </p>
+
+            <p>
+                <strong>Internships</strong>
+                {{ internships }}
+            </p>
+
+            <p>
+                <strong>Certifications</strong>
+                {{ certifications }}
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- STRENGTHS -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Profile Strengths</h2>
+
+        {% if strengths %}
+
+            <ul>
+
+                {% for item in strengths %}
+
+                    <li class="strength">
+                        ✓ {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No major strengths identified.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- IMPROVEMENTS -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Areas to Improve</h2>
+
+        {% if improvements %}
+
+            <ul>
+
+                {% for item in improvements %}
+
+                    <li class="improvement">
+                        ⚠ {{ item }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+        {% else %}
+
+            <p>
+                No major improvement areas identified.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- RECOMMENDATIONS -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Recommendations</h2>
+
+        <ul>
+
+            {% for item in recommendations %}
+
+                <li class="recommendation">
+                    → {{ item }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CAREER ROLES -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>Recommended Career Roles</h2>
+
+        <p>
+            Based on the student's academic,
+            technical, aptitude and communication
+            profile, the system suggests:
+        </p>
+
+
+        {% for role in recommended_roles %}
+
+            <div class="career-role">
+
+                → {{ role }}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ACTIONS -->
+    <!-- ================================================= -->
+
+    <div class="action-buttons">
+
+        <a
+            href="{{ url_for('predict') }}"
+            class="button"
+        >
+            Analyze Another Student
+        </a>
+
+
+        <a
+            href="{{ url_for(
+                'download_report',
+                branch=branch,
+                college_tier=college_tier,
+                cgpa=cgpa,
+                backlogs=backlogs,
+                coding_skills=coding_skills,
+                dsa_score=dsa_score,
+                aptitude_score=aptitude_score,
+                communication_skills=communication_skills,
+                internships=internships,
+                certifications=certifications,
+                probability=placement_probability,
+                status='LIKELY TO BE PLACED'
+                if prediction == 1
+                else 'LESS LIKELY TO BE PLACED'
+            ) }}"
+            class="button secondary-button"
+        >
+            Download Report
+        </a>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

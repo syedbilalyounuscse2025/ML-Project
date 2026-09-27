@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Model Performance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>PlacementAI</h2>
+
+    <div>
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('predict') }}">Predict</a>
+
+        <a href="{{ url_for('upload') }}">Upload CSV</a>
+
+        <a href="{{ url_for('history') }}">History</a>
+
+        <a href="{{ url_for('feature_importance') }}">
+            AI Analysis
+        </a>
+
+        <a href="{{ url_for('visualizations') }}">
+            Visualizations
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <h1>
+        Machine Learning Model Performance
+    </h1>
+
+    <p>
+        Evaluation of the machine learning algorithms
+        used for Student Placement Prediction.
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- BEST MODEL -->
+    <!-- ================================================= -->
+
+    <div class="result-card">
+
+        <h2>
+            Selected Model
+        </h2>
+
+        <div class="profile-badge">
+
+            {{ metrics.best_model }}
+
+        </div>
+
+        <p>
+
+            This model was selected because it achieved
+            the highest F1 score among the evaluated models.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- METRICS -->
+    <!-- ================================================= -->
+
+    <div class="metric-grid">
+
+        <div class="metric-card">
+
+            <h3>Accuracy</h3>
+
+            <div class="metric-value">
+
+                {{ (metrics.accuracy * 100)|round(2) }}%
+
+            </div>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>Precision</h3>
+
+            <div class="metric-value">
+
+                {{ (metrics.precision * 100)|round(2) }}%
+
+            </div>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>Recall</h3>
+
+            <div class="metric-value">
+
+                {{ (metrics.recall * 100)|round(2) }}%
+
+            </div>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>F1 Score</h3>
+
+            <div class="metric-value">
+
+                {{ (metrics.f1_score * 100)|round(2) }}%
+
+            </div>
+
+        </div>
+
+
+        <div class="metric-card">
+
+            <h3>ROC-AUC</h3>
+
+            <div class="metric-value">
+
+                {{ (metrics.roc_auc * 100)|round(2) }}%
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MODEL COMPARISON -->
+    <!-- ================================================= -->
+
+    <div class="card-wide">
+
+        <h2>
+            Model Comparison
+        </h2>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <tr>
+
+                    <th>Model</th>
+
+                    <th>Accuracy</th>
+
+                    <th>Precision</th>
+
+                    <th>Recall</th>
+
+                    <th>F1 Score</th>
+
+                    <th>ROC-AUC</th>
+
+                </tr>
+
+
+                {% for name, values in metrics.models.items() %}
+
+                <tr
+                    {% if name == metrics.best_model %}
+                    class="best-row"
+                    {% endif %}
+                >
+
+                    <td>
+
+                        {{ name }}
+
+                        {% if name == metrics.best_model %}
+
+                            ⭐ Best Model
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+                        {{ (values.accuracy * 100)|round(2) }}%
+                    </td>
+
+
+                    <td>
+                        {{ (values.precision * 100)|round(2) }}%
+                    </td>
+
+
+                    <td>
+                        {{ (values.recall * 100)|round(2) }}%
+                    </td>
+
+
+                    <td>
+                        {{ (values.f1 * 100)|round(2) }}%
+                    </td>
+
+
+                    <td>
+                        {{ (values.roc_auc * 100)|round(2) }}%
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- CONFUSION MATRIX -->
+    <!-- ================================================= -->
+
+    <div class="card-wide">
+
+        <h2>
+            Confusion Matrix
+        </h2>
+
+        <p>
+            The confusion matrix shows actual versus
+            predicted placement outcomes for the selected model.
+        </p>
+
+
+        <table class="confusion-table">
+
+            <tr>
+
+                <th></th>
+
+                <th>Predicted 0</th>
+
+                <th>Predicted 1</th>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Actual 0</th>
+
+                <td>
+                    {{ metrics.confusion_matrix[0][0] }}
+                </td>
+
+                <td>
+                    {{ metrics.confusion_matrix[0][1] }}
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <th>Actual 1</th>
+
+                <td>
+                    {{ metrics.confusion_matrix[1][0] }}
+                </td>
+
+                <td>
+                    {{ metrics.confusion_matrix[1][1] }}
+                </td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>
