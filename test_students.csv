@@ -1,0 +1,5 @@
+branch,college_tier,cgpa,backlogs,coding_skills,dsa_score,aptitude_score,communication_skills,internships,certifications
+CSE,Tier1,8.8,0,9,9,90,9,2,4
+CSE,Tier2,7.2,0,7,6,70,7,1,2
+MECH,Tier3,5.2,3,2,2,40,3,0,0
+ECE,Tier2,8,0,8,8,82,8,2,3
